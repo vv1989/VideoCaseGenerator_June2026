@@ -3,6 +3,7 @@ import json
 
 import subprocess
 import imageio_ffmpeg
+import textwrap
 
 from moviepy.editor import (
     ImageClip,
@@ -112,11 +113,32 @@ class MovieGenerator:
         dummy = Image.new("RGBA", (1, 1))
         draw = ImageDraw.Draw(dummy)
 
+        actor_role = "\n".join(
+            textwrap.wrap(
+                actor_role,
+                width=28
+            )
+        )
+
         name_bbox = draw.textbbox(
-            (0, 0),
+            (0,0),
             actor_name,
             font=name_font
         )
+
+        role_bbox = draw.multiline_textbbox(
+            (0,0),
+            actor_role,
+            font=role_font
+        )
+
+        name_width = name_bbox[2] - name_bbox[0]
+        role_width = role_bbox[2] - role_bbox[0]
+
+        width = max(
+            name_width,
+            role_width
+        ) + 50
 
         role_bbox = draw.textbbox(
             (0, 0),
@@ -128,7 +150,7 @@ class MovieGenerator:
         role_width = role_bbox[2] - role_bbox[0]
 
         width = max(name_width, role_width) + 40
-        height = 90
+        height = 120
 
         img = Image.new(
             "RGBA",
@@ -145,8 +167,15 @@ class MovieGenerator:
             font=name_font
         )
 
+        actor_role = "\n".join(
+            textwrap.wrap(
+                actor_role,
+                width=28
+            )
+        )
+
         draw.text(
-            (15, 48),
+            (15, 58),
             actor_role,
             fill="white",
             font=role_font
@@ -767,7 +796,7 @@ class MovieGenerator:
 
                     "-filter_complex",
 
-                    "overlay=60:H-h-80:enable='between(t,0,2)'",
+                    "overlay=50:H-h-35:enable='between(t,0,2)'",
 
                     "-c:v", "libx264",
 
