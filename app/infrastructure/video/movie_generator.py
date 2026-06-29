@@ -88,8 +88,18 @@ class MovieGenerator:
 
         # width = 900
         # height = 120
-        width = 650
-        height = 100
+        # width = 450
+
+        name_bbox = draw.textbbox((0,0), actor_name, font=name_font)
+        role_bbox = draw.textbbox((0,0), actor_role, font=role_font)
+
+        text_width = max(
+            name_bbox[2],
+            role_bbox[2]
+        )
+
+        width = text_width + 40
+        height = 90
 
         img = Image.new(
             "RGBA",
@@ -104,13 +114,13 @@ class MovieGenerator:
             name_font = ImageFont.truetype(
                 "arial.ttf",
                 # 40
-                34
+                44
             )
 
             role_font = ImageFont.truetype(
                 "arial.ttf",
                 #28
-                24
+                30
             )
 
         except:
@@ -119,14 +129,14 @@ class MovieGenerator:
             role_font = ImageFont.load_default()
 
         draw.text(
-            (20, 15),
+            (15, 10),
             actor_name,
             fill="white",
             font=name_font
         )
 
         draw.text(
-            (20, 65),
+            (15, 48),
             actor_role,
             fill="white",
             font=role_font
@@ -747,7 +757,7 @@ class MovieGenerator:
 
                     "-filter_complex",
 
-                    "overlay=60:H-h-120:enable='between(t,0,2)'",
+                    "overlay=60:H-h-80:enable='between(t,0,2)'",
 
                     "-c:v", "libx264",
 
