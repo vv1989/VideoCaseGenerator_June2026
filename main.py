@@ -12,19 +12,6 @@ import inspect
 # DEBUG IMPORTS
 # =====================================================
 
-print("\n🔥 ===== IMPORT DEBUG =====")
-
-print(
-    "🚨 GenerateCase FILE:",
-    inspect.getfile(GenerateCase)
-)
-
-print(
-    "🚨 CasePipeline FILE:",
-    inspect.getfile(CasePipeline)
-)
-
-print("====================================\n")
 
 
 def main():
