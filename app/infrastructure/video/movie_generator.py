@@ -79,26 +79,55 @@ class MovieGenerator:
     # CREATE OVERLAY
     # ==================================================
 
+        
     def create_actor_overlay(
         self,
         actor_name,
         actor_role,
-        output_path = None
+        output_path=None
     ):
 
         # width = 900
         # height = 120
         # width = 450
 
-        name_bbox = draw.textbbox((0,0), actor_name, font=name_font)
-        role_bbox = draw.textbbox((0,0), actor_role, font=role_font)
 
-        text_width = max(
-            name_bbox[2],
-            role_bbox[2]
+        try:
+
+            name_font = ImageFont.truetype(
+                "arial.ttf",
+                44
+            )
+
+            role_font = ImageFont.truetype(
+                "arial.ttf",
+                30
+            )
+
+        except:
+
+            name_font = ImageFont.load_default()
+            role_font = ImageFont.load_default()
+
+        dummy = Image.new("RGBA", (1, 1))
+        draw = ImageDraw.Draw(dummy)
+
+        name_bbox = draw.textbbox(
+            (0, 0),
+            actor_name,
+            font=name_font
         )
 
-        width = text_width + 40
+        role_bbox = draw.textbbox(
+            (0, 0),
+            actor_role,
+            font=role_font
+        )
+
+        name_width = name_bbox[2] - name_bbox[0]
+        role_width = role_bbox[2] - role_bbox[0]
+
+        width = max(name_width, role_width) + 40
         height = 90
 
         img = Image.new(
@@ -108,25 +137,6 @@ class MovieGenerator:
         )
 
         draw = ImageDraw.Draw(img)
-
-        try:
-
-            name_font = ImageFont.truetype(
-                "arial.ttf",
-                # 40
-                44
-            )
-
-            role_font = ImageFont.truetype(
-                "arial.ttf",
-                #28
-                30
-            )
-
-        except:
-
-            name_font = ImageFont.load_default()
-            role_font = ImageFont.load_default()
 
         draw.text(
             (15, 10),
