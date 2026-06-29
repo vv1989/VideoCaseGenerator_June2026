@@ -3,6 +3,7 @@ from app.pipelines.case_pipeline import CasePipeline
 from app.infrastructure.images.image_generator import ImageGenerator
 from app.infrastructure.audio.voice_generator import VoiceGenerator
 from app.infrastructure.video.movie_generator import MovieGenerator
+from app.infrastructure.text.text_llm import TextLLM
 
 import os
 import inspect
