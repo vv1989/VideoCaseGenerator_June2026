@@ -815,8 +815,13 @@ class MovieGenerator:
             print("Return code:", result.returncode)
             print("================================")
 
+            print("===================================")
+            print("Return code:", result.returncode)
+            print("Scene exists:", os.path.exists(scene_output))
+            print("===================================")
+
             if result.returncode != 0:
-                raise RuntimeError(result.stderr)
+                raise RuntimeError(f"FFmpeg exit code: {result.returncode}")
 
         target_duration = total_duration + 6
 
