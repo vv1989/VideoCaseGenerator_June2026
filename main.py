@@ -1,6 +1,5 @@
 from app.pipelines.case_pipeline import CasePipeline
 
-from app.infrastructure.llms.text_llm import TextLLM
 from app.infrastructure.images.image_generator import ImageGenerator
 from app.infrastructure.audio.voice_generator import VoiceGenerator
 from app.infrastructure.video.movie_generator import MovieGenerator
