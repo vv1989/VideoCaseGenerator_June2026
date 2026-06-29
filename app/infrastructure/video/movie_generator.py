@@ -80,7 +80,6 @@ class MovieGenerator:
     # CREATE OVERLAY
     # ==================================================
 
-        
     def create_actor_overlay(
         self,
         actor_name,
@@ -88,101 +87,115 @@ class MovieGenerator:
         output_path=None
     ):
 
-        # width = 900
-        # height = 120
-        # width = 450
-
-
         try:
-
-            name_font = ImageFont.truetype(
-                "arial.ttf",
-                44
-            )
-
-            role_font = ImageFont.truetype(
-                "arial.ttf",
-                30
-            )
-
+            name_font = ImageFont.truetype("arialbd.ttf", 34)
+            role_font = ImageFont.truetype("arial.ttf", 22)
         except:
+            try:
+                name_font = ImageFont.truetype("arial.ttf", 34)
+                role_font = ImageFont.truetype("arial.ttf", 22)
+            except:
+                name_font = ImageFont.load_default()
+                role_font = ImageFont.load_default()
 
-            name_font = ImageFont.load_default()
-            role_font = ImageFont.load_default()
+        # -----------------------------
+        # Wrap role (maximum two lines)
+        # -----------------------------
 
-        dummy = Image.new("RGBA", (1, 1))
+        wrapped_role = textwrap.wrap(actor_role, width=26)
+
+        if len(wrapped_role) > 2:
+            wrapped_role = wrapped_role[:2]
+
+        wrapped_role = "\n".join(wrapped_role)
+
+        # -----------------------------
+        # Measure text
+        # -----------------------------
+
+        dummy = Image.new("RGBA", (10, 10))
         draw = ImageDraw.Draw(dummy)
 
-        actor_role = "\n".join(
-            textwrap.wrap(
-                actor_role,
-                width=28
-            )
-        )
-
-        name_bbox = draw.textbbox(
-            (0,0),
+        name_box = draw.textbbox(
+            (0, 0),
             actor_name,
             font=name_font
         )
 
-        role_bbox = draw.multiline_textbbox(
-            (0,0),
-            actor_role,
-            font=role_font
-        )
-
-        name_width = name_bbox[2] - name_bbox[0]
-        role_width = role_bbox[2] - role_bbox[0]
-
-        width = max(
-            name_width,
-            role_width
-        ) + 50
-
-        role_bbox = draw.textbbox(
+        role_box = draw.multiline_textbbox(
             (0, 0),
-            actor_role,
-            font=role_font
+            wrapped_role,
+            font=role_font,
+            spacing=2
         )
 
-        name_width = name_bbox[2] - name_bbox[0]
-        role_width = role_bbox[2] - role_bbox[0]
+        name_width = name_box[2] - name_box[0]
+        role_width = role_box[2] - role_box[0]
 
-        width = max(name_width, role_width) + 40
-        height = 120
+        text_width = max(name_width, role_width)
+
+        name_height = name_box[3] - name_box[1]
+        role_height = role_box[3] - role_box[1]
+
+        # -----------------------------
+        # Compact padding
+        # -----------------------------
+
+        pad_x = 14
+        pad_top = 10
+        gap = 4
+        pad_bottom = 10
+
+        width = text_width + pad_x * 2
+
+        height = (
+            pad_top +
+            name_height +
+            gap +
+            role_height +
+            pad_bottom
+        )
 
         img = Image.new(
             "RGBA",
             (width, height),
-            (0, 0, 0, 180)
+            (0, 0, 0, 0)
         )
 
         draw = ImageDraw.Draw(img)
 
+        # Rounded rectangle
+
+        draw.rounded_rectangle(
+            (0, 0, width - 1, height - 1),
+            radius=10,
+            fill=(0, 0, 0, 185)
+        )
+
+        # Name
+
         draw.text(
-            (15, 10),
+            (pad_x, pad_top),
             actor_name,
-            fill="white",
-            font=name_font
+            font=name_font,
+            fill=(255, 255, 255)
         )
 
-        actor_role = "\n".join(
-            textwrap.wrap(
-                actor_role,
-                width=28
-            )
-        )
+        # Role
 
-        draw.text(
-            (15, 58),
-            actor_role,
-            fill="white",
-            font=role_font
+        draw.multiline_text(
+            (
+                pad_x,
+                pad_top + name_height + gap
+            ),
+            wrapped_role,
+            font=role_font,
+            fill=(215, 215, 215),
+            spacing=2
         )
 
         return np.array(img)
-    
+            
     # ==================================================
     # CREATE MOVIE
     # ==================================================
@@ -796,7 +809,7 @@ class MovieGenerator:
 
                     "-filter_complex",
 
-                    "overlay=50:H-h-35:enable='between(t,0,2)'",
+                    "overlay=45:H-h-55:enable='between(t,0,2)'",
 
                     "-c:v", "libx264",
 
