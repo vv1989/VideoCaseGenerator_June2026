@@ -86,8 +86,10 @@ class MovieGenerator:
         output_path = None
     ):
 
-        width = 900
-        height = 120
+        # width = 900
+        # height = 120
+        width = 650
+        height = 100
 
         img = Image.new(
             "RGBA",
@@ -101,12 +103,14 @@ class MovieGenerator:
 
             name_font = ImageFont.truetype(
                 "arial.ttf",
-                40
+                # 40
+                34
             )
 
             role_font = ImageFont.truetype(
                 "arial.ttf",
-                28
+                #28
+                24
             )
 
         except:
@@ -743,7 +747,7 @@ class MovieGenerator:
 
                     "-filter_complex",
 
-                    "overlay=50:H-h-50:enable='between(t,0,2)'",
+                    "overlay=60:H-h-120:enable='between(t,0,2)'",
 
                     "-c:v", "libx264",
 
