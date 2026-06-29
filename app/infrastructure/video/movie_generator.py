@@ -324,6 +324,12 @@ class MovieGenerator:
                 text=True
             )
 
+            print("Concat return code:", result.returncode)
+            print("movie.mp4 exists:", os.path.exists(output_file))
+
+            if result.returncode != 0:
+                raise RuntimeError(result.stderr)
+
             print(result.stdout)
             print(result.stderr)
 
@@ -899,5 +905,14 @@ class MovieGenerator:
 
         print(result.stdout)
         print(result.stderr)
+
+        print("FFmpeg return code:", result.returncode)
+        print("movie.mp4 exists:", os.path.exists(output_file))
+        print("movie_music.mp4 exists:", os.path.exists(temp_output))
+
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"FFmpeg failed:\n{result.stderr}"
+            )
 
         return temp_output
