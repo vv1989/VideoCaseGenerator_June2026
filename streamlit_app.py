@@ -168,8 +168,19 @@ if "case" in st.session_state:
 
     video_path = getattr(case, "output_video_path", None)
 
+    st.write("Current directory:", os.getcwd())
     st.write("Video path:", video_path)
     st.write("Exists:", os.path.exists(video_path) if video_path else False)
+
+    if video_path:
+
+        folder = os.path.dirname(video_path)
+
+        st.write("Folder:", folder)
+        st.write("Folder exists:", os.path.exists(folder))
+
+        if os.path.exists(folder):
+            st.write("Files in folder:", os.listdir(folder))
 
     if video_path and os.path.exists(video_path):
 
