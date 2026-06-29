@@ -743,7 +743,7 @@ class MovieGenerator:
 
                     "-filter_complex",
 
-                    "[0:v][1:v]overlay=50:850:enable='between(t,0,2)'",
+                    "overlay=50:H-h-50:enable='between(t,0,2)'",
 
                     "-c:v", "libx264",
 
