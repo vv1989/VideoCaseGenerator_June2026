@@ -145,6 +145,7 @@ if "dilemmas" in st.session_state:
                 st.session_state["topic"],
                 selected_dilemma
             )
+            st.write(vars(case))
 
         st.session_state["case"] = case
 
