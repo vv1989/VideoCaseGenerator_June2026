@@ -1,0 +1,28 @@
+# Web UI
+streamlit==1.58.0
+
+# LLMs
+openai==2.44.0
+google-genai==2.10.0
+
+# Configuration
+python-dotenv==1.2.2
+
+# Text-to-Speech
+edge-tts==7.2.8
+
+# Video generation
+moviepy==1.0.3
+imageio==2.37.3
+imageio-ffmpeg==0.6.0
+pillow==11.3.0
+
+# Data processing
+numpy==2.5.0
+pandas==3.0.3
+
+# HTTP requests
+requests==2.34.2
+
+# Progress bars
+tqdm==4.68.3
