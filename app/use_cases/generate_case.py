@@ -105,8 +105,25 @@ class GenerateCase:
     # 🧠 PROMPT
     # ==================================================
 
-    def _build_prompt(self, topic, dilemma, template):
+    def _build_actor_constraints(self, template):
 
+        lines = []
+
+        for i, actor in enumerate(template.actors, start=1):
+
+            gender = "woman" if actor.gender.lower() == "female" else "man"
+
+            lines.append(
+                f"""Actor {i}:
+    - {actor.nationality} {gender}
+    - Age {actor.age_range}
+    """
+            )
+
+        return "\n".join(lines)
+
+    def _build_prompt(self, topic, dilemma, template):
+        actor_constraints = self._build_actor_constraints(template)
         return f"""
 
 You are generating a short business school case in a nice documentary style.
@@ -173,17 +190,7 @@ DOCUMENTARY STYLE RULES
 
 10. The case must contain exactly three actors.
 
-Actor 1:
-- British woman
-- Age 35–45
-
-Actor 2:
-- Indian man
-- Age 35–45
-
-Actor 3:
-- American man
-- Age 35–45
+{actor_constraints}
 
 Do not introduce any additional speaking characters.
 All dialogue must be assigned to one of these three actors or the narrator.
