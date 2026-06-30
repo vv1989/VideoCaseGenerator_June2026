@@ -141,12 +141,12 @@ STRUCTURE
 
 Scene 1 → narrator
 
-Actors appear in interview format across 3 rounds.
+Actors appear in interview format across 2 rounds.
 Each actor speaks directly to the camera or interviewer.
 
 Final scene → narrator
 
-Total scenes ~10–12
+Total scenes ~7–9
 
 --------------------------------------
 DOCUMENTARY STYLE RULES
