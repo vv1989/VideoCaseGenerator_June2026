@@ -20,6 +20,11 @@ class GenerateAudio:
             "audio"
         )
 
+        actor_voice_map = {}
+
+        for actor in case.actors:
+            actor_voice_map[actor.actor_id] = actor.template_actor_id
+
         os.makedirs(
             output_dir,
             exist_ok=True
@@ -40,30 +45,10 @@ class GenerateAudio:
 
                 voice_key = "narrator"
 
-            # ---------------------------------
-            # Actor 1 (British woman)
-            # ---------------------------------
+            elif scene.actor_id in actor_voice_map:
 
-            elif scene.actor_id == "a0":
-
-                voice_key = "actor1"
-
-            # ---------------------------------
-            # Actor 2 (Indian man)
-            # ---------------------------------
-
-            elif scene.actor_id == "a1":
-
-                voice_key = "actor2"
-
-            # ---------------------------------
-            # Actor 3 (American man)
-            # ---------------------------------
-
-            elif scene.actor_id == "a2":
-
-                voice_key = "actor3"
-
+                voice_key = actor_voice_map[scene.actor_id]
+                
             else:
 
                 voice_key = "narrator"
