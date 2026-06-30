@@ -90,7 +90,7 @@ class GenerateCase:
 
         self._print_full_output(last_prompt, best_data)
 
-        case = self._build_case(best_data, topic, dilemma)
+        case = self._build_case(best_data, topic, dilemma, template)
 
         # 👉 NEW: Human-readable output
         self._print_human_readable(case)
@@ -371,7 +371,7 @@ INPUT:
     # 🧱 BUILD CASE
     # ==================================================
 
-    def _build_case(self, data, topic, dilemma):
+    def _build_case(self, data, topic, dilemma, template):
 
         actor_map = {}
         actors = []
@@ -422,6 +422,7 @@ INPUT:
             actors=actors,
             scenes=scenes,
             visual_plan=data.get("visual_plan", {}),
-            generated_images={}
+            generated_images={},
+            template=template
         )
     

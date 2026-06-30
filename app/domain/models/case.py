@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
+from app.domain.models.case_template import CaseTemplate
 
 
 @dataclass
@@ -36,3 +37,6 @@ class Case:
 
     # Populated after images are generated
     generated_images: Dict[str, str] = field(default_factory=dict)
+
+    # Template used to generate this case
+    template: Optional[CaseTemplate] = None
