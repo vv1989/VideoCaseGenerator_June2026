@@ -56,15 +56,46 @@ class ImageGenerator:
 
         elif self.provider == "assets":
 
-            self.asset_folder = (
-                "app/assets/images"
+            template_folder = os.path.join(
+                self.asset_folder,
+                template.template_id
             )
 
-            self.model = (
-                "local_assets"
+            file_map = {
+                "cover": "cover.png",
+                "closing": "closing.png",
+                "actor_1": "actor1.png",
+                "actor_2": "actor2.png",
+                "actor_3": "actor3.png"
+            }
+
+            asset_name = file_map.get(image_type)
+
+            if asset_name is None:
+                raise ValueError(
+                    f"Unknown image type: {image_type}"
+                )
+
+            source_file = os.path.join(
+                template_folder,
+                asset_name
             )
 
-            self._actor_counter = 0
+            if not os.path.exists(source_file):
+                raise FileNotFoundError(
+                    f"Asset image not found: {source_file}"
+                )
+
+            shutil.copy(
+                source_file,
+                filepath
+            )
+
+            print(
+                f"✅ Copied {source_file} -> {filepath}"
+            )
+
+            return filepath
 
         # ==========================================
         # UNSUPPORTED
