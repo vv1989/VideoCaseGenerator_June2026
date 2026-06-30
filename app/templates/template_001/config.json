@@ -1,0 +1,29 @@
+{
+    "template_id": "template_001",
+    "actors": [
+        {
+            "actor_id": "actor_1",
+            "gender": "Female",
+            "nationality": "British",
+            "age_range": "35-45",
+            "image_folder": "app/assets/images/template_001/actor_1",
+            "voice": "en-GB-SoniaNeural"
+        },
+        {
+            "actor_id": "actor_2",
+            "gender": "Male",
+            "nationality": "Indian",
+            "age_range": "40-50",
+            "image_folder": "app/assets/images/template_001/actor_2",
+            "voice": "en-IN-PrabhatNeural"
+        },
+        {
+            "actor_id": "actor_3",
+            "gender": "Male",
+            "nationality": "Irish",
+            "age_range": "30-40",
+            "image_folder": "app/assets/images/template_001/actor_3",
+            "voice": "en-IE-ConnorNeural"
+        }
+    ]
+}
