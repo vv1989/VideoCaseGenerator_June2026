@@ -812,9 +812,7 @@ class MovieGenerator:
 
                     "-filter_complex",
 
-                    f"[0:v]scale={VIDEO_WIDTH}:{VIDEO_HEIGHT}:force_original_aspect_ratio=increase,"
-
-                    f"crop={VIDEO_WIDTH}:{VIDEO_HEIGHT}[bg];"
+                    f"[0:v]scale={VIDEO_WIDTH}:{VIDEO_HEIGHT}[bg];"
 
                     f"[bg][1:v]overlay=50:main_h-overlay_h-50:enable='between(t,0,2)'",
 
@@ -854,9 +852,7 @@ class MovieGenerator:
 
                     "-vf",
 
-                    f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT}:force_original_aspect_ratio=increase,"
-
-                    f"crop={VIDEO_WIDTH}:{VIDEO_HEIGHT}",
+                    f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT}",
 
                     "-c:v", "libx264",
 
