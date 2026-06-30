@@ -41,7 +41,7 @@ class CaseService:
         return self.pipeline.generate_dilemmas(topic)
 
     def build_case(self, topic, dilemma):
-        template = self.template_loader.load("template_001")
+        template = self.template_loader.load("template_002")
         return self.pipeline.build_multimedia_case(
             topic=topic,
             dilemma=dilemma,
