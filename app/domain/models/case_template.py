@@ -7,7 +7,6 @@ class ActorTemplate:
     gender: str
     nationality: str
     age_range: str
-    image_folder: str
     voice: str
 
 @dataclass
