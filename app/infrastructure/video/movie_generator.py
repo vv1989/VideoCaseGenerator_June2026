@@ -707,9 +707,6 @@ class MovieGenerator:
         INTRO_DURATION = 2.0
         ENDING_DURATION = 2.0
 
-        VIDEO_WIDTH = 640
-        VIDEO_HEIGHT = 360
-
         total_duration = 0
 
         for scene in case.scenes:
@@ -812,9 +809,7 @@ class MovieGenerator:
 
                     "-filter_complex",
 
-                    f"[0:v]scale={VIDEO_WIDTH}:{VIDEO_HEIGHT}[bg];"
-
-                    f"[bg][1:v]overlay=50:main_h-overlay_h-50:enable='between(t,0,2)'",
+                    "[0:v][1:v]overlay=50:main_h-overlay_h-50:enable='between(t,0,2)'",
 
                     "-c:v", "libx264",
 
@@ -849,10 +844,6 @@ class MovieGenerator:
                     "-i", image_path,
 
                     "-i", audio_path,
-
-                    "-vf",
-
-                    f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT}",
 
                     "-c:v", "libx264",
 
