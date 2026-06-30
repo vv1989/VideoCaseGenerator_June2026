@@ -377,18 +377,21 @@ INPUT:
         actors = []
 
         for i, a in enumerate(data["actors"]):
+
             actor_id = f"a{i}"
+
             actor_map[a["name"]] = actor_id
 
             actors.append(
                 Actor(
                     actor_id=actor_id,
+                    template_actor_id=f"actor_{i+1}",
                     name=a["name"],
                     role=a["role"],
                     personality_traits=[]
                 )
             )
-
+            
         scenes = []
 
         for i, s in enumerate(data["scenes"]):

@@ -5,10 +5,11 @@ from typing import List, Optional, Dict, Any
 @dataclass
 class Actor:
     actor_id: str
+    template_actor_id: str
     name: str
     role: str
     personality_traits: List[str]
-
+    
 
 @dataclass
 class Scene:
