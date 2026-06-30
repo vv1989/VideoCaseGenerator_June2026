@@ -73,13 +73,14 @@ class CasePipeline:
     # CASE TEXT
     # ==========================================
 
-    def generate_case(self, topic, dilemma):
+    def generate_case(self, topic, dilemma, template):
 
         print("\n🚀 GENERATING CASE TEXT")
 
         return self.case_uc.execute(
             topic,
-            dilemma
+            dilemma,
+            template
         )
     
     def save_case_text(
@@ -208,11 +209,12 @@ class CasePipeline:
     # ==========================================
     # COMPLETE MULTIMEDIA CASE
     # ==========================================
-
+        
     def build_multimedia_case(
         self,
         topic,
         dilemma,
+        template,
         generate_images=True,
         generate_audio=True,
         generate_video=True
@@ -227,7 +229,8 @@ class CasePipeline:
 
         case = self.generate_case(
             topic,
-            dilemma
+            dilemma,
+            template
         )
 
         print(vars(case))

@@ -30,7 +30,8 @@ class GenerateCase:
     # 🎯 MAIN EXECUTION
     # ==================================================
 
-    def execute(self, topic: str, dilemma: str):
+    # def execute(self, topic: str, dilemma: str):
+    def execute(self, topic: str, dilemma: str, template):
 
         best_data = None
         best_score = -1
@@ -39,7 +40,7 @@ class GenerateCase:
         for attempt in range(self.max_retries):
             self._log(f"\n🔁 ===== Attempt {attempt + 1} =====")
 
-            prompt = self._build_prompt(topic, dilemma)
+            prompt = self._build_prompt(topic, dilemma, template)
             last_prompt = prompt
 
             self._log("\n🧠 PROMPT SENT:\n" + prompt[:500] + "...")
@@ -104,7 +105,7 @@ class GenerateCase:
     # 🧠 PROMPT
     # ==================================================
 
-    def _build_prompt(self, topic, dilemma):
+    def _build_prompt(self, topic, dilemma, template):
 
         return f"""
 

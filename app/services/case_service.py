@@ -3,7 +3,7 @@ from app.infrastructure.text.text_llm import TextLLM
 from app.infrastructure.images.image_generator import ImageGenerator
 from app.infrastructure.audio.voice_generator import VoiceGenerator
 from app.infrastructure.video.movie_generator import MovieGenerator
-
+from app.infrastructure.config.template_loader import TemplateLoader
 
 class CaseService:
 
@@ -27,6 +27,8 @@ class CaseService:
             background_music="app/assets/audio/background_music.mp3"
         )
 
+        self.template_loader = TemplateLoader()
+
         self.pipeline = CasePipeline(
             text_llm=text_llm,
             image_generator=image_generator,
@@ -39,9 +41,11 @@ class CaseService:
         return self.pipeline.generate_dilemmas(topic)
 
     def build_case(self, topic, dilemma):
+        template = self.template_loader.load("template_001")
         return self.pipeline.build_multimedia_case(
             topic=topic,
             dilemma=dilemma,
+            template=template,
             generate_images=True,
             generate_audio=True,
             generate_video=True
