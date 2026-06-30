@@ -10,20 +10,6 @@ nest_asyncio.apply()
 
 class VoiceGenerator:
 
-    DEFAULT_VOICES = {
-
-        "narrator":
-            "en-GB-RyanNeural",
-
-        "actor1":
-            "en-GB-SoniaNeural",
-
-        "actor2":
-            "en-IN-PrabhatNeural",
-
-        "actor3":
-            "en-US-AndrewNeural"
-    }
 
     # ==================================================
     # INIT
@@ -85,8 +71,9 @@ class VoiceGenerator:
     def generate(
         self,
         text,
-        voice_key,
-        filepath
+        voice,
+        filepath,
+        rate="+0%"
     ):
 
         os.makedirs(
@@ -94,20 +81,7 @@ class VoiceGenerator:
             exist_ok=True
         )
 
-        voice = self.DEFAULT_VOICES.get(
-            voice_key,
-            self.DEFAULT_VOICES[
-                "narrator"
-            ]
-        )
-
         loop = asyncio.get_event_loop()
-
-        rate = "+0%"
-
-        if voice_key == "narrator":
-
-            rate = "-10%"
 
         loop.run_until_complete(
 
@@ -119,6 +93,7 @@ class VoiceGenerator:
             )
 
         )
+
         print(
             f"🎤 Audio saved: "
             f"{filepath}"

@@ -20,11 +20,17 @@ class GenerateAudio:
             "audio"
         )
 
+        template_voice_map = {}
+
+        for template_actor in case.template.actors:
+            template_voice_map[template_actor.actor_id] = template_actor.voice
+
         actor_voice_map = {}
 
         for actor in case.actors:
-            actor_voice_map[actor.actor_id] = actor.template_actor_id
-
+            actor_voice_map[actor.actor_id] = template_voice_map[
+                actor.template_actor_id
+            ]
         os.makedirs(
             output_dir,
             exist_ok=True
@@ -43,22 +49,24 @@ class GenerateAudio:
 
             if scene.speaker.lower() == "narrator":
 
-                voice_key = "narrator"
+                voice = "en-GB-RyanNeural"
 
             elif scene.actor_id in actor_voice_map:
 
-                voice_key = actor_voice_map[scene.actor_id]
-                
+                voice = actor_voice_map[scene.actor_id]
+
             else:
 
-                voice_key = "narrator"
+                voice = "en-GB-RyanNeural"
+
+            rate = "-10%" if scene.speaker.lower() == "narrator" else "+0%"
 
             self.voice_generator.generate(
                 text=scene.text,
-                voice_key=voice_key,
-                filepath=filepath
+                voice=voice,
+                filepath=filepath,
+                rate=rate
             )
-
             print(
                 f"✅ Audio generated: {filepath}"
             )
