@@ -56,46 +56,9 @@ class ImageGenerator:
 
         elif self.provider == "assets":
 
-            template_folder = os.path.join(
-                self.asset_folder,
-                template.template_id
-            )
+            self.asset_folder = "app/assets/images"
 
-            file_map = {
-                "cover": "cover.png",
-                "closing": "closing.png",
-                "actor_1": "actor1.png",
-                "actor_2": "actor2.png",
-                "actor_3": "actor3.png"
-            }
-
-            asset_name = file_map.get(image_type)
-
-            if asset_name is None:
-                raise ValueError(
-                    f"Unknown image type: {image_type}"
-                )
-
-            source_file = os.path.join(
-                template_folder,
-                asset_name
-            )
-
-            if not os.path.exists(source_file):
-                raise FileNotFoundError(
-                    f"Asset image not found: {source_file}"
-                )
-
-            shutil.copy(
-                source_file,
-                filepath
-            )
-
-            print(
-                f"✅ Copied {source_file} -> {filepath}"
-            )
-
-            return filepath
+            self.model = "local_assets"
 
         # ==========================================
         # UNSUPPORTED
@@ -188,68 +151,36 @@ class ImageGenerator:
         # ==========================================
 
         elif self.provider == "assets":
+            template_folder = os.path.join(
+                self.asset_folder,
+                template.template_id
+            )
 
-            filename = os.path.basename(
-                filepath
-            ).lower()
+            file_map = {
+                "cover": "cover.png",
+                "closing": "closing.png",
+                "actor_1": "actor1.png",
+                "actor_2": "actor2.png",
+                "actor_3": "actor3.png"
+            }
 
-            # --------------------------------------
-            # COVER
-            # --------------------------------------
+            asset_name = file_map.get(image_type)
 
-            if "cover" in filename:
+            if asset_name is None:
 
-                asset_name = "cover.png"
-
-            # --------------------------------------
-            # CLOSING
-            # --------------------------------------
-
-            elif "closing" in filename:
-
-                asset_name = "closing.png"
-
-            # --------------------------------------
-            # ACTORS
-            # --------------------------------------
-
-            elif filename.startswith(
-                "actor"
-            ):
-
-                actor_files = [
-                    "actor1.png",
-                    "actor2.png",
-                    "actor3.png"
-                ]
-
-                asset_name = actor_files[
-                    self._actor_counter
-                    % len(actor_files)
-                ]
-
-                self._actor_counter += 1
-
-            # --------------------------------------
-            # FALLBACK
-            # --------------------------------------
-
-            else:
-
-                asset_name = "cover.png"
+                raise ValueError(
+                    f"Unknown image type: {image_type}"
+                )
 
             source_file = os.path.join(
-                self.asset_folder,
+                template_folder,
                 asset_name
             )
 
-            if not os.path.exists(
-                source_file
-            ):
+            if not os.path.exists(source_file):
 
                 raise FileNotFoundError(
-                    f"Asset image not found: "
-                    f"{source_file}"
+                    f"Asset image not found: {source_file}"
                 )
 
             shutil.copy(
@@ -258,9 +189,7 @@ class ImageGenerator:
             )
 
             print(
-                f"✅ Copied asset image "
-                f"({asset_name}) -> "
-                f"{filepath}"
+                f"✅ Copied {asset_name}"
             )
 
             return filepath
