@@ -104,48 +104,6 @@ class GenerateImages:
                 f"✅ Actor image saved: {filepath}"
             )
 
-        # ------------------------------------------
-        # Scene images
-        # ------------------------------------------
-
-        for scene in visual_plan.get(
-            "scene_images",
-            []
-        ):
-
-            scene_id = scene.get(
-                "scene_id"
-            )
-
-            prompt = scene.get(
-                "image_prompt"
-            )
-
-            if not scene_id or not prompt:
-                continue
-
-            filepath = os.path.join(
-                output_dir,
-                f"{scene_id}.png"
-            )
-
-            self.image_generator.generate_and_save(
-                prompt=prompt,
-                filepath=filepath
-            )
-
-            case.generated_images[
-                scene_id
-            ] = filepath
-
-            print(
-                f"✅ Scene image saved: {filepath}"
-            )
-
-        # ------------------------------------------
-        # Closing image
-        # ------------------------------------------
-
         closing_prompt = visual_plan.get(
             "closing_image"
         )
