@@ -44,9 +44,10 @@ class GenerateImages:
 
             self.image_generator.generate_and_save(
                 prompt=cover_prompt,
-                filepath=filepath
+                filepath=filepath,
+                image_type="cover",
+                template=case.template
             )
-
             case.generated_images["cover"] = filepath
 
             print(
@@ -64,6 +65,11 @@ class GenerateImages:
 
             actor_name = actor.get(
                 "name"
+            )
+
+            generated_actor = next(
+                a for a in case.actors
+                if a.name == actor_name
             )
 
             prompt = actor.get(
@@ -86,9 +92,10 @@ class GenerateImages:
 
             self.image_generator.generate_and_save(
                 prompt=prompt,
-                filepath=filepath
+                filepath=filepath,
+                image_type=generated_actor.template_actor_id,
+                template=case.template
             )
-
             case.generated_images[
                 f"actor_{safe_name}"
             ] = filepath
@@ -152,9 +159,10 @@ class GenerateImages:
 
             self.image_generator.generate_and_save(
                 prompt=closing_prompt,
-                filepath=filepath
+                filepath=filepath,
+                image_type="closing",
+                template=case.template
             )
-
             case.generated_images[
                 "closing"
             ] = filepath

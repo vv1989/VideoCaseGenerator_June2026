@@ -101,9 +101,10 @@ class ImageGenerator:
         self,
         prompt,
         filepath,
+        image_type=None,
+        template=None,
         size="1024x1024"
     ):
-
         print("\n🎨 Generating image...")
         print(f"📁 Output: {filepath}")
 
