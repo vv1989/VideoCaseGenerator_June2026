@@ -1,5 +1,7 @@
 import json
 from pathlib import Path
+import random
+import os
 
 from app.domain.models.case_template import CaseTemplate, ActorTemplate
 
@@ -23,7 +25,6 @@ class TemplateLoader:
                     gender=actor["gender"],
                     nationality=actor["nationality"],
                     age_range=actor["age_range"],
-                    image_folder=actor["image_folder"],
                     voice=actor["voice"],
                 )
             )
@@ -31,4 +32,36 @@ class TemplateLoader:
         return CaseTemplate(
             template_id=data["template_id"],
             actors=actors,
+        )
+    
+    def load_random(self) -> CaseTemplate:
+
+        templates = []
+
+        for item in self.templates_path.iterdir():
+
+            if item.is_dir():
+
+                config = item / "config.json"
+
+                if config.exists():
+
+                    templates.append(item.name)
+
+        if not templates:
+
+            raise ValueError(
+                "No templates found."
+            )
+
+        template_id = random.choice(
+            templates
+        )
+
+        print(
+            f"\n🎲 Selected template: {template_id}"
+        )
+
+        return self.load(
+            template_id
         )
