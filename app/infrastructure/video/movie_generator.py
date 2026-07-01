@@ -405,6 +405,8 @@ class MovieGenerator:
 
             ]
 
+            print("========== SCENE GENERATION ==========")
+
             result = subprocess.run(
                 command,
                 capture_output=True,
@@ -949,12 +951,24 @@ class MovieGenerator:
 
         ]
 
+        print("\n========== CONCAT ==========")
+        print("Command:")
+        print(" ".join(command))
+
         result = subprocess.run(
             command,
             capture_output=True,
             text=True
         )
 
+        print(result.stdout)
+        print(result.stderr)
+        print("Return code:", result.returncode)
+
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"CONCAT FAILED\n\n{result.stderr}"
+            )
         print(result.stdout)
         print(result.stderr)
 
@@ -999,22 +1013,31 @@ class MovieGenerator:
 
         ]
 
+        print("\n========== BACKGROUND MUSIC ==========")
+        print("Selected music:", music_file)
+        print("Music exists:", os.path.exists(music_file))
+        print("Command:")
+        print(" ".join(command))
+
         result = subprocess.run(
             command,
             capture_output=True,
             text=True
         )
 
+        print("\n========== STDOUT ==========")
         print(result.stdout)
+
+        print("\n========== STDERR ==========")
         print(result.stderr)
 
-        print("FFmpeg return code:", result.returncode)
-        print("movie.mp4 exists:", os.path.exists(output_file))
-        print("movie_music.mp4 exists:", os.path.exists(temp_output))
+        print("Return code:", result.returncode)
 
         if result.returncode != 0:
             raise RuntimeError(
-                f"FFmpeg failed:\n{result.stderr}"
+                f"\nBACKGROUND MUSIC FAILED\n"
+                f"Return code: {result.returncode}\n\n"
+                f"{result.stderr}"
             )
 
         return temp_output
