@@ -8,6 +8,18 @@ from app.infrastructure.config.template_loader import TemplateLoader
 import os
 import random
 
+def get_random_background_music():
+
+    music_folder = "app/assets/audio/background_music"
+
+    music_files = [
+        os.path.join(music_folder, f)
+        for f in os.listdir(music_folder)
+        if f.endswith(".mp3")
+    ]
+
+    return random.choice(music_files)
+
 class CaseService:
 
     def __init__(self):
@@ -54,14 +66,3 @@ class CaseService:
             generate_video=True
         )
     
-    def get_random_background_music():
-
-        music_folder = "app/assets/audio/background_music"
-
-        music_files = [
-            os.path.join(music_folder, f)
-            for f in os.listdir(music_folder)
-            if f.endswith(".mp3")
-        ]
-
-        return random.choice(music_files)
