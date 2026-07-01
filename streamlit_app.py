@@ -170,7 +170,7 @@ if "dilemmas" in st.session_state:
                 st.session_state["topic"],
                 selected_dilemma
             )
-            st.write(vars(case))
+            # st.write(vars(case))
 
         st.session_state["case"] = case
 
@@ -186,27 +186,27 @@ if "case" in st.session_state:
 
     st.header(case.title)
 
-    st.write(f"**Topic:** {case.topic}")
+    # st.write(f"**Topic:** {case.topic}")
 
-    st.write(f"**Dilemma:** {case.dilemma}")
+    # st.write(f"**Dilemma:** {case.dilemma}")
 
-    st.write(f"**Setting:** {case.setting}")
+    # st.write(f"**Setting:** {case.setting}")
 
     video_path = getattr(case, "output_video_path", None)
 
-    st.write("Current directory:", os.getcwd())
-    st.write("Video path:", video_path)
-    st.write("Exists:", os.path.exists(video_path) if video_path else False)
+    # st.write("Current directory:", os.getcwd())
+    # st.write("Video path:", video_path)
+    # st.write("Exists:", os.path.exists(video_path) if video_path else False)
 
     if video_path:
 
         folder = os.path.dirname(video_path)
 
-        st.write("Folder:", folder)
-        st.write("Folder exists:", os.path.exists(folder))
+        # st.write("Folder:", folder)
+        # st.write("Folder exists:", os.path.exists(folder))
 
         if os.path.exists(folder):
-            st.write("Files in folder:", os.listdir(folder))
+            # st.write("Files in folder:", os.listdir(folder))
 
     if video_path and os.path.exists(video_path):
 
