@@ -5,6 +5,9 @@ from app.infrastructure.audio.voice_generator import VoiceGenerator
 from app.infrastructure.video.movie_generator import MovieGenerator
 from app.infrastructure.config.template_loader import TemplateLoader
 
+import os
+import random
+
 class CaseService:
 
     def __init__(self):
@@ -22,11 +25,10 @@ class CaseService:
             provider="edge_tts"
         )
 
-        movie_generator = MovieGenerator(
+        MovieGenerator(
             provider="moviepy",
-            background_music="app/assets/audio/background_music.mp3"
+            background_music=get_random_background_music()
         )
-
         self.template_loader = TemplateLoader()
 
         self.pipeline = CasePipeline(
@@ -51,3 +53,15 @@ class CaseService:
             generate_audio=True,
             generate_video=True
         )
+    
+    def get_random_background_music():
+
+        music_folder = "app/assets/audio/background_music"
+
+        music_files = [
+            os.path.join(music_folder, f)
+            for f in os.listdir(music_folder)
+            if f.endswith(".mp3")
+        ]
+
+        return random.choice(music_files)
