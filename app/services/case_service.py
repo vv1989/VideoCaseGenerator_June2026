@@ -37,7 +37,7 @@ class CaseService:
             provider="edge_tts"
         )
 
-        MovieGenerator(
+        movie_generator = MovieGenerator(
             provider="moviepy",
             background_music=get_random_background_music()
         )
