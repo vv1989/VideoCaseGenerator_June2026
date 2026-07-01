@@ -24,11 +24,36 @@ def get_service():
 
 st.markdown("""
 <style>
-
-div.block-container{
-    padding-top:1rem;
+            
+html,
+body,
+[data-testid="stAppViewContainer"]{
+    background:#ffffff;
+    color:#262730;
 }
 
+[data-testid="stHeader"]{
+    background:#ffffff;
+}
+
+[data-testid="stSidebar"]{
+    background:#fafafa;
+}
+            
+div.block-container{
+    padding-top:1rem;
+    padding-left:2rem;
+    padding-right:2rem;
+    max-width:1100px;
+}
+@media (max-width:768px){
+
+.block-container{
+    padding-left:1rem;
+    padding-right:1rem;
+}
+
+}
 .stButton > button{
     width:100%;
     height:55px;
