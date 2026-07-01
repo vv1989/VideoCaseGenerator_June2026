@@ -894,24 +894,28 @@ class MovieGenerator:
                 text=True
             )
 
+            print("========== FFMPEG STDOUT ==========")
             print(result.stdout)
+
+            print("========== FFMPEG STDERR ==========")
             print(result.stderr)
 
-            print("================================")
-            print("Scene:", scene.scene_id)
-            print("Scene video:", scene_output)
-            print("Exists:", os.path.exists(scene_output))
             print("Return code:", result.returncode)
-            print("================================")
-
-            print("===================================")
-            print("Return code:", result.returncode)
-            print("Scene exists:", os.path.exists(scene_output))
-            print("===================================")
 
             if result.returncode != 0:
-                raise RuntimeError(f"FFmpeg exit code: {result.returncode}")
+                raise RuntimeError(
+                    f"""
+            FFmpeg failed
 
+            Return code: {result.returncode}
+
+            STDERR:
+            {result.stderr}
+
+            STDOUT:
+            {result.stdout}
+            """
+                )
         target_duration = total_duration + 6
 
         concat_file = os.path.join(
