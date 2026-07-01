@@ -205,7 +205,7 @@ if "case" in st.session_state:
         # st.write("Folder:", folder)
         # st.write("Folder exists:", os.path.exists(folder))
 
-        if os.path.exists(folder):
+        # if os.path.exists(folder):
             # st.write("Files in folder:", os.listdir(folder))
 
     if video_path and os.path.exists(video_path):
