@@ -834,7 +834,11 @@ class MovieGenerator:
 
                     "[0:v][1:v]overlay=50:main_h-overlay_h-50:enable='between(t,0,2)'",
 
-                    "-c:v", "libx264",
+                    "-vf",
+                    "scale=trunc(iw/2)*2:trunc(ih/2)*2",
+
+                    "-c:v",
+                    "libx264",
 
                     "-preset", "ultrafast",
 
@@ -868,7 +872,11 @@ class MovieGenerator:
 
                     "-i", audio_path,
 
-                    "-c:v", "libx264",
+                    "-vf",
+                    "scale=trunc(iw/2)*2:trunc(ih/2)*2",
+
+                    "-c:v",
+                    "libx264",
 
                     "-preset", "ultrafast",
 
