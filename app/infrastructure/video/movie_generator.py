@@ -5,6 +5,8 @@ import subprocess
 import imageio_ffmpeg
 import textwrap
 
+import random
+
 from moviepy.editor import (
     ImageClip,
     AudioFileClip,
@@ -36,6 +38,25 @@ from PIL import (
 )
 
 import numpy as np
+
+def get_random_background_music():
+
+    music_folder = "app/assets/audio/background_music"
+
+    music_files = [
+        os.path.join(music_folder, f)
+        for f in os.listdir(music_folder)
+        if f.lower().endswith(".mp3")
+    ]
+
+    if not music_files:
+        raise RuntimeError("No background music found.")
+
+    selected = random.choice(music_files)
+
+    print(f"🎵 Selected music: {os.path.basename(selected)}")
+
+    return selected
 
 class MovieGenerator:
 
@@ -939,7 +960,7 @@ class MovieGenerator:
 
         print("🎬 Final movie created.")
 
-        music_file = self.background_music
+        music_file = get_random_background_music()
 
         if not os.path.exists(music_file):
             raise FileNotFoundError(music_file)

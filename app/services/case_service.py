@@ -38,8 +38,7 @@ class CaseService:
         )
 
         movie_generator = MovieGenerator(
-            provider="moviepy",
-            background_music=get_random_background_music()
+            provider="moviepy"
         )
         self.template_loader = TemplateLoader()
 
