@@ -28,7 +28,7 @@ class TextLLM(BaseLLM):
 
         "groq": {
             "base_url": "https://api.groq.com/openai/v1",
-            "model": "llama-3.1-8b-instant",
+            "model": "openai/gpt-oss-120b",
             "env_key": "GROQ_API_KEY"
         }
     }
