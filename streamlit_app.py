@@ -194,6 +194,9 @@ if "case" in st.session_state:
 
     video_path = getattr(case, "output_video_path", None)
 
+    if video_path and not os.path.isabs(video_path):
+        video_path = os.path.abspath(video_path)
+
     st.write("Current directory:", os.getcwd())
     st.write("Video path:", video_path)
     st.write("Exists:", os.path.exists(video_path) if video_path else False)
