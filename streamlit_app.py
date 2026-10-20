@@ -214,27 +214,24 @@ if "case" in st.session_state:
 
     if video_path and os.path.exists(video_path):
 
-        st.write("Video size (MB):", round(os.path.getsize(video_path) / (1024 * 1024), 2))
+        st.write(
+            "Video size (MB):",
+            round(os.path.getsize(video_path) / (1024 * 1024), 2)
+        )
 
         with open(video_path, "rb") as f:
-            st.write("First 16 bytes:", f.read(16))
+            video_bytes = f.read()
 
-        with open(video_path, "rb") as f:
-            st.video(f.read(), format="video/mp4")
+        st.video(video_bytes, format="video/mp4")
 
-        st.video(video_path)
+        st.download_button(
+            label="📥 Download Video",
+            data=video_bytes,
+            file_name="generated_case.mp4",
+            mime="video/mp4",
+            use_container_width=True,
+            key="download_generated_video",
+        )
 
-        col1, col2 = st.columns([4, 1])
-
-        with col2:
-
-            with open(video_path, "rb") as file:
-
-                st.download_button(
-                    label="📥 Download Video",
-                    data=file,
-                    file_name=f"{case.title}.mp4",
-                    mime="video/mp4",
-                    use_container_width=True
-                )
-                
+    else:
+        st.error("Video file not found.")
