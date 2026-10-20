@@ -194,9 +194,9 @@ if "case" in st.session_state:
 
     video_path = getattr(case, "output_video_path", None)
 
-    # st.write("Current directory:", os.getcwd())
-    # st.write("Video path:", video_path)
-    # st.write("Exists:", os.path.exists(video_path) if video_path else False)
+    st.write("Current directory:", os.getcwd())
+    st.write("Video path:", video_path)
+    st.write("Exists:", os.path.exists(video_path) if video_path else False)
 
     if video_path:
 
