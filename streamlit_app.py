@@ -192,7 +192,8 @@ if "case" in st.session_state:
 
     # st.write(f"**Setting:** {case.setting}")
 
-    video_path = getattr(case, "output_video_path", None)
+    # video_path = getattr(case, "output_video_path", None)
+    video_path = getattr(case, "output_video_path", None) or getattr(case, "video_path", None)
 
     if video_path and not os.path.isabs(video_path):
         video_path = os.path.abspath(video_path)
