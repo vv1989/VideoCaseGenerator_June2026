@@ -219,6 +219,9 @@ if "case" in st.session_state:
         with open(video_path, "rb") as f:
             st.write("First 16 bytes:", f.read(16))
 
+        with open(video_path, "rb") as f:
+            st.video(f.read(), format="video/mp4")
+
         st.video(video_path)
 
         col1, col2 = st.columns([4, 1])
