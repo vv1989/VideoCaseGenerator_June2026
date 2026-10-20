@@ -213,8 +213,11 @@ if "case" in st.session_state:
             # st.write("Files in folder:", os.listdir(folder))
 
     if video_path and os.path.exists(video_path):
-        
+
         st.write("Video size (MB):", round(os.path.getsize(video_path) / (1024 * 1024), 2))
+
+        with open(video_path, "rb") as f:
+            st.write("First 16 bytes:", f.read(16))
 
         st.video(video_path)
 
