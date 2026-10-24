@@ -25,59 +25,142 @@ def get_service():
 
 st.markdown("""
 <style>
-            
-html,
-body,
-[data-testid="stAppViewContainer"]{
-    background:#ffffff;
-    color:#262730;
+/* Keep the application readable even when the browser/device prefers dark mode. */
+:root {
+    color-scheme: light;
 }
 
-[data-testid="stHeader"]{
-    background:#ffffff;
+html, body, [data-testid="stApp"], [data-testid="stAppViewContainer"],
+[data-testid="stMain"], [data-testid="stMainBlockContainer"] {
+    background: #ffffff !important;
+    color: #262730 !important;
 }
 
-[data-testid="stSidebar"]{
-    background:#fafafa;
-}
-            
-div.block-container{
-    padding-top:1rem;
-    padding-left:2rem;
-    padding-right:2rem;
-    max-width:1100px;
-}
-@media (max-width:768px){
-
-.block-container{
-    padding-left:1rem;
-    padding-right:1rem;
+[data-testid="stHeader"] {
+    background: #ffffff !important;
 }
 
-}
-.stButton > button{
-    width:100%;
-    height:55px;
-    border-radius:14px;
-    font-size:18px;
-    font-weight:600;
-    transition:0.2s;
+[data-testid="stSidebar"],
+[data-testid="stSidebar"] > div {
+    background: #f7f8fa !important;
+    color: #262730 !important;
 }
 
-.stButton > button:hover{
-    transform:translateY(-2px);
+[data-testid="stMarkdownContainer"],
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMarkdownContainer"] label,
+.stText,
+.stCaption,
+h1, h2, h3, h4, h5, h6,
+label {
+    color: #262730;
 }
 
-div[data-testid="stRadio"]{
-    padding:15px;
-    border-radius:10px;
-    background:#f8f9fa;
+div.block-container {
+    padding-top: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1100px;
 }
 
-textarea{
-    border-radius:10px;
+@media (max-width: 768px) {
+    div.block-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
+/* Text inputs and text areas */
+div[data-baseweb="input"] > div,
+div[data-baseweb="textarea"] > div,
+[data-testid="stTextInput"] input,
+[data-testid="stTextArea"] textarea {
+    background: #ffffff !important;
+    color: #262730 !important;
+    border-color: #c9cdd4 !important;
+    border-radius: 10px !important;
+}
+
+input, textarea {
+    color: #262730 !important;
+    caret-color: #262730 !important;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #686d78 !important;
+    opacity: 1 !important;
+}
+
+/* Dropdowns and select controls */
+div[data-baseweb="select"] > div {
+    background: #ffffff !important;
+    color: #262730 !important;
+    border-color: #c9cdd4 !important;
+}
+
+div[data-baseweb="popover"],
+div[data-baseweb="menu"],
+ul[role="listbox"],
+li[role="option"] {
+    background: #ffffff !important;
+    color: #262730 !important;
+}
+
+/* Radio and checkbox areas */
+div[data-testid="stRadio"] {
+    padding: 15px;
+    border-radius: 10px;
+    background: #f4f6f8 !important;
+}
+
+div[data-testid="stRadio"] *,
+div[data-testid="stCheckbox"] *,
+div[data-testid="stToggle"] * {
+    color: #262730;
+}
+
+/* Buttons */
+.stButton > button,
+.stDownloadButton > button {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #262730 !important;
+    background: #f2f3f5 !important;
+    border: 1px solid #c9cdd4 !important;
+    transition: 0.2s;
+}
+
+.stButton > button:hover,
+.stDownloadButton > button:hover {
+    background: #e7e9ed !important;
+    border-color: #aeb4bf !important;
+    transform: translateY(-1px);
+}
+
+/* Keep alerts, code blocks, and bordered panels legible */
+[data-testid="stAlert"] {
+    color: #262730 !important;
+}
+
+[data-testid="stAlert"] * {
+    color: inherit;
+}
+
+[data-testid="stVerticalBlockBorderWrapper"] {
+    border-color: #d9dde4 !important;
+}
+
+pre, code {
+    color: #262730;
+}
+
+hr {
+    border-color: #e0e3e8 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
