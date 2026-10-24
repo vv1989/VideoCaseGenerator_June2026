@@ -1,4 +1,5 @@
 import os
+from PIL import Image
 
 from dotenv import load_dotenv
 
@@ -171,6 +172,57 @@ if "dilemmas" in st.session_state:
                 selected_dilemma
             )
             # st.write(vars(case))
+
+
+            # =================================================
+            # DEBUG: INSPECT GENERATED IMAGES
+            # =================================================
+
+            st.subheader("Debug: Generated Scene Images")
+
+            case_id = getattr(case, "case_id", None)
+
+            if case_id:
+                image_folder = os.path.join(
+                    "generated_cases",
+                    case_id,
+                    "images"
+                )
+
+                st.caption(f"Case ID: {case_id}")
+                st.caption(f"Image folder: {image_folder}")
+
+                image_files = [
+                    "cover.png",
+                    "actor_priya_mehta.png",
+                    "actor_james_whitaker.png",
+                ]
+
+                columns = st.columns(3)
+
+                for column, filename in zip(columns, image_files):
+                    image_path = os.path.join(
+                        image_folder,
+                        filename
+                    )
+
+                    with column:
+                        st.markdown(f"**{filename}**")
+
+                        if os.path.isfile(image_path):
+                            try:
+                                with Image.open(image_path) as img:
+                                    st.image(
+                                        img.copy(),
+                                        caption=f"{img.width} × {img.height}",
+                                        use_container_width=True
+                                    )
+                            except Exception as exc:
+                                st.error(f"Could not open image: {exc}")
+                        else:
+                            st.warning("Image file not found.")
+            else:
+                st.warning("Could not determine the generated case ID.")
 
         st.session_state["case"] = case
 
