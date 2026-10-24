@@ -960,22 +960,25 @@ class MovieGenerator:
                     f"file 'scene_{scene.scene_id}.mp4'\n"
                 )
                 
+        # Re-encode the concatenated video instead of stream-copying it.
+        # Scene files can have slightly different timestamps/durations; stream
+        # copying may preserve timestamp irregularities that some players handle
+        # poorly. Re-encoding normalizes the final video to a consistent H.264
+        # stream while preserving the scene order and audio.
         command = [
-
             FFMPEG,
-
             "-y",
-
             "-f", "concat",
-
             "-safe", "0",
-
             "-i", concat_file,
-
-            "-c", "copy",
-
+            "-vf", "fps=24,scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p",
+            "-c:v", "libx264",
+            "-preset", "ultrafast",
+            "-crf", "23",
+            "-c:a", "aac",
+            "-ar", "48000",
+            "-movflags", "+faststart",
             output_file
-
         ]
 
         print("\n========== CONCAT ==========")
@@ -1029,10 +1032,13 @@ class MovieGenerator:
 
             "[1:a]volume=0.20[a1];[0:a][a1]amix=inputs=2:duration=longest",
 
-            "-c:v", "copy",
-
+            "-vf", "fps=24,scale=trunc(iw/2)*2:trunc(ih/2)*2,format=yuv420p",
+            "-c:v", "libx264",
+            "-preset", "ultrafast",
+            "-crf", "23",
             "-c:a", "aac",
-
+            "-ar", "48000",
+            "-movflags", "+faststart",
             "-t",
             str(target_duration),
 
