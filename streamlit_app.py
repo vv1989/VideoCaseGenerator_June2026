@@ -174,8 +174,9 @@ if "dilemmas" in st.session_state:
             # st.write(vars(case))
 
 
+
             # =================================================
-            # DEBUG: INSPECT GENERATED IMAGES
+            # DEBUG: INSPECT ALL GENERATED IMAGES
             # =================================================
 
             st.subheader("Debug: Generated Scene Images")
@@ -190,26 +191,28 @@ if "dilemmas" in st.session_state:
                 )
 
                 st.caption(f"Case ID: {case_id}")
-                st.caption(f"Image folder: {image_folder}")
+                st.caption(f"Image folder: {os.path.abspath(image_folder)}")
 
-                image_files = [
-                    "cover.png",
-                    "actor_priya_mehta.png",
-                    "actor_james_whitaker.png",
-                ]
-
-                columns = st.columns(3)
-
-                for column, filename in zip(columns, image_files):
-                    image_path = os.path.join(
-                        image_folder,
+                if os.path.isdir(image_folder):
+                    image_files = sorted(
                         filename
+                        for filename in os.listdir(image_folder)
+                        if filename.lower().endswith(
+                            (".png", ".jpg", ".jpeg", ".webp")
+                        )
                     )
 
-                    with column:
-                        st.markdown(f"**{filename}**")
+                    st.write(f"Found {len(image_files)} image files.")
 
-                        if os.path.isfile(image_path):
+                    if image_files:
+                        for filename in image_files:
+                            image_path = os.path.join(
+                                image_folder,
+                                filename
+                            )
+
+                            st.markdown(f"**{filename}**")
+
                             try:
                                 with Image.open(image_path) as img:
                                     st.image(
@@ -218,15 +221,14 @@ if "dilemmas" in st.session_state:
                                         use_container_width=True
                                     )
                             except Exception as exc:
-                                st.error(f"Could not open image: {exc}")
-                        else:
-                            st.warning("Image file not found.")
+                                st.error(f"Could not open {filename}: {exc}")
+                    else:
+                        st.warning("No image files found in this folder.")
+                else:
+                    st.error("The images folder does not exist.")
             else:
-                st.warning("Could not determine the generated case ID.")
+                st.warning("Could not determine the case ID.")
 
-        st.session_state["case"] = case
-
-        st.success("✅ Multimedia case generated successfully.")
 
 if "case" in st.session_state:
 
