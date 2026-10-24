@@ -757,6 +757,24 @@ class MovieGenerator:
 
             total_duration += scene_duration
 
+            print("\n===== IMAGE MAPPING DEBUG =====")
+            print("Case ID:", case.case_id)
+            print("Scene ID:", scene.scene_id)
+            print("Sequence:", scene.sequence)
+            print("Speaker:", repr(scene.speaker))
+            print("Actor ID:", repr(scene.actor_id))
+
+            actor = next(
+                (a for a in case.actors
+                if a.actor_id == scene.actor_id),
+                None
+            )
+
+            print("Matched actor:", actor.name if actor else None)
+            print("Template actor ID:",
+                actor.template_actor_id if actor else None)
+            print("===============================")
+
             if scene.speaker.lower() == "narrator":
 
                 if scene.scene_id == last_narrator_id:
