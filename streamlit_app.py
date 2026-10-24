@@ -171,6 +171,10 @@ if "dilemmas" in st.session_state:
                 st.session_state["topic"],
                 selected_dilemma
             )
+            # Persist the generated case across Streamlit reruns so the
+            # final-video display block below can access it.
+            st.session_state["case"] = case
+
             # st.write(vars(case))
 
 
