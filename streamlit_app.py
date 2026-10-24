@@ -229,6 +229,73 @@ if "dilemmas" in st.session_state:
             else:
                 st.warning("Could not determine the case ID.")
 
+            # =================================================
+            # DEBUG: INSPECT INDIVIDUAL SCENE VIDEOS
+            # =================================================
+
+            import glob
+            import subprocess
+            import imageio_ffmpeg
+
+            st.subheader("Debug: Individual Scene Videos")
+
+            if case_id and os.path.isdir(image_folder):
+                scene_videos = sorted(
+                    glob.glob(
+                        os.path.join(
+                            "generated_cases",
+                            case_id,
+                            "images",
+                            "scene_*.mp4"
+                        )
+                    )
+                )
+
+                st.write(f"Found {len(scene_videos)} scene videos.")
+
+                if scene_videos:
+                    ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+
+                    for scene_video in scene_videos:
+                        st.markdown(
+                            f"**{os.path.basename(scene_video)}**"
+                        )
+
+                        try:
+                            result = subprocess.run(
+                                [
+                                    ffmpeg_exe,
+                                    "-hide_banner",
+                                    "-loglevel", "error",
+                                    "-i", scene_video,
+                                    "-frames:v", "1",
+                                    "-f", "image2pipe",
+                                    "-vcodec", "png",
+                                    "-"
+                                ],
+                                capture_output=True,
+                                timeout=15,
+                                check=False
+                            )
+
+                            if result.returncode == 0 and result.stdout:
+                                st.image(
+                                    result.stdout,
+                                    caption=os.path.basename(scene_video),
+                                    width=400
+                                )
+                            else:
+                                st.warning(
+                                    f"Could not extract a frame from "
+                                    f"{os.path.basename(scene_video)}."
+                                )
+
+                        except Exception as exc:
+                            st.error(f"Preview error: {exc}")
+                else:
+                    st.warning(
+                        "No scene_*.mp4 files found in the images folder."
+                    )
 
 if "case" in st.session_state:
 
